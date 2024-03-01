@@ -1,0 +1,22 @@
+{
+  "name": "progenitor-chain",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "diu": "tsc src/index.ts --outDir build && node build/index.js",
+    "keygen": "tsc src/controller/KeyGenerator.ts --outDir build && node build/KeyGenerator.js"
+  },
+  "devDependencies": {
+    "@types/elliptic": "^6.4.18",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.8"
+  },
+  "dependencies": {
+    "cryptojs": "^2.5.3",
+    "elliptic": "^6.5.4",
+    "ts-node": "^10.9.2"
+  }
+}
