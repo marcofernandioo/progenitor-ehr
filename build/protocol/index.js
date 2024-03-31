@@ -36,50 +36,32 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var get_port_1 = require("get-port");
 // import getPort from '../node_modules/get-port';
-// import * as ejs from 'ejs';
-var express = require('express');
-var path = require("path");
-var index_1 = require("./protocol/index");
-var app = express();
-app.use(express.json());
-app.use(express.static(path.join(__dirname, '../client/build')));
-// app.set('view engine', 'ejs');
-// app.set('views', `D:\\prog\\projects\\progenitor\\progenitor-chain\\src\\views`);
-// app.set('views', path.resolve(__dirname, "..", "src\\views"));
-// console.log(path.resolve(__dirname, "..", "src\\views"));
-console.log("Client Path:", path.join(__dirname, "../client-vite/dist"));
-// app.set('views', './views');
-app.use(express.static('public'));
-var startServerOnAvailablePort = function () { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        return [2 /*return*/];
-    });
-}); };
-startServerOnAvailablePort();
-app.post('/register', function (req, res) {
-    // 1. Input Username & role.
-    // 2. Generate ppkp.
-    // 3. Store in DB.
-    res.json({ data: "successfully loaded." });
-});
-app.post('/login', function (req, res) {
-    // const { username, privateKey } = req.body;
-    // 1. Find username in DB.
-    // const user = User.findOne(username);
-    // 2. Check if private key entered could generate the public key stored in the DB.
-    // const _publicKey = derivePublicKeyFromPrivateKey(privateKey);
-    // if (user.publicKey === _publicKey)
-    // return true;
-    res.json({ data: "logged in" });
-});
-// Return a response of the current blockchain data.
-app.get('/get-data', function (req, res) {
-    // 1. Actually have the blockchain data as an object.
-    // 2. Propagate.
-});
-// app.listen(3000, () => {
-//     console.log("Node running on port 3000")
-// });
-// Protocol.startServerOnAvailablePort(app);
-index_1.default.startServerOnAvailablePort(app);
+// import getPort from '../../node_modules/get-port';
+// const getPort = require('get-port');
+var Protocol = /** @class */ (function () {
+    function Protocol() {
+    }
+    Protocol.startServerOnAvailablePort = function (app) {
+        return __awaiter(this, void 0, void 0, function () {
+            var port;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, (0, get_port_1.default)({ port: this.portList })];
+                    case 1:
+                        port = _a.sent();
+                        app.listen(port, function () {
+                            console.log("App running on port", port);
+                        });
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    Protocol.prototype.propagateBlockchainData = function () {
+    };
+    Protocol.portList = [3000, 3001, 3002, 3003, 3004];
+    return Protocol;
+}());
+exports.default = Protocol;

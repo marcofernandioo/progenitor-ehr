@@ -1,52 +1,80 @@
-import Block from './controller/Block';
-import Blockchain from './controller/Blockchain'
-import Transaction from './controller/Transaction'
-import * as I from './interface';
-// import Transaction from './controller/Transaction'
+// import getPort from '../node_modules/get-port';
+// import * as ejs from 'ejs';
+const express = require('express');
+import mongoose from 'mongoose';
 
-import { ec } from 'elliptic';
-const gen = new ec('secp256k1');
+import * as path from 'path';
 
+import { derivePrivateKeyFromPublicKey } from './util';
+import Protocol from './protocol/index'
 
-const myKey = gen.keyFromPrivate(
-    '7c4c45907dec40c91bab3480c39032e90049f1a44f3e18c3e07c23e3273995cf'
-);
+const app = express();
+app.use(express.json());
+app.use(express.static(path.join(__dirname, '../client/build')))
+// app.set('view engine', 'ejs');
 
-const progenitor = new Blockchain();
-progenitor.createGenesisBlock();
-const tx1 = new Transaction(
-    "04729aaee497f99ff7ed4da9b7a5c23912da6533783b5cee16839b1e2628bc3413672b407a68c7a15a6fe3ea238b16f26e7a35755e258a0b9fb3d007da7a2e9c94",
-    "no body",
-    myKey
-);
+// app.set('views', `D:\\prog\\projects\\progenitor\\progenitor-chain\\src\\views`);
+// app.set('views', path.resolve(__dirname, "..", "src\\views"));
 
-const tx2 = new Transaction(
-    "04729aaee497f99ff7ed4da9b7a5c23912da6533783b5cee16839b1e2628bc3413672b407a68c7a15a6fe3ea238b16f26e7a35755e258a0b9fb3d007da7a2e9c94",
-    "dllm",
-    myKey
-);
+// console.log(path.resolve(__dirname, "..", "src\\views"));
+console.log("Client Path:", path.join(__dirname, "../client-vite/dist"))
+// app.set('views', './views');
 
-const tx3 = new Transaction(
-    "04729aaee497f99ff7ed4da9b7a5c23912da6533783b5cee16839b1e2628bc3413672b407a68c7a15a6fe3ea238b16f26e7a35755e258a0b9fb3d007da7a2e9c94",
-    "Lei Lou Mou",
-    myKey
-);
+app.use(express.static('public'));
 
-progenitor.addTransaction(tx1);
-progenitor.addTransaction(tx2);
-progenitor.mineBlock();
+const startServerOnAvailablePort = async () => {
+    // const port = await getPort({ port: ports });
+    // console.log(getPort);
 
-progenitor.addTransaction(tx3);
-progenitor.mineBlock();
+    // // If we try to initialize more ports than specified in the array,
+    // // rejected.
+    // if (port > ports[ports.length - 1]) {
+    //     return null;
+    // }
 
+    // // This endpoint is for this node to receive the data.
+    // // Nodes must call this endpoint "/" to send data to other nodes.
+    // app.post('/', (req: any, res: any) => {
+    //     const data = req.body;
+    //     console.log(`Received data: ${JSON.stringify(data.key)}`);
+    //     // Process the received data as needed
+    //     res.send('DIU LEI LOU MOU');
+    // })
 
-console.log("BLOCK:")
-console.log(progenitor.blocks[1].transactions);
+    // app.listen(port);
+    // console.log(`Node server running on port ${port}`);
+}
 
-console.log("Chain pending tx: ")
-console.log(progenitor.pendingTransactions);
-console.log(progenitor);
+startServerOnAvailablePort();
 
-console.log("MR: ");
-console.log(progenitor.blocks[2].merkleRoot)
-console.log(typeof progenitor.blocks[2].merkleRoot)
+app.post('/register', (req: any, res: any) => {
+    // 1. Input Username & role.
+    // 2. Generate ppkp.
+    // 3. Store in DB.
+    res.json({data: "successfully loaded."})
+})
+
+app.post('/login', (req: any, res: any) => {
+    // const { username, privateKey } = req.body;
+    // 1. Find username in DB.
+    // const user = User.findOne(username);
+    // 2. Check if private key entered could generate the public key stored in the DB.
+    // const _publicKey = derivePublicKeyFromPrivateKey(privateKey);
+    // if (user.publicKey === _publicKey)
+    // return true;
+    res.json({data: "logged in"});   
+})
+
+// Return a response of the current blockchain data.
+app.get('/get-data', (req: any, res: any) => {
+    // 1. Actually have the blockchain data as an object.
+    // 2. Propagate.
+})
+
+// app.listen(3000, () => {
+//     console.log("Node running on port 3000")
+// });
+
+// Protocol.startServerOnAvailablePort(app);
+Protocol.startServerOnAvailablePort(app);
+

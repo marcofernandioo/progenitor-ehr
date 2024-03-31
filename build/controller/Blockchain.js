@@ -8,6 +8,7 @@ var Blockchain = /** @class */ (function () {
         this.pendingTransactions = [];
         this.blocks = [];
         this.difficulty;
+        this.createGenesisBlock();
     }
     Blockchain.prototype.createGenesisBlock = function () {
         var genesisBlock = new Block_1.default('', [], 0);
@@ -15,19 +16,13 @@ var Blockchain = /** @class */ (function () {
     };
     // Check the remaining blocks on the chain to see if there hashes and
     // signatures are correct
-    Blockchain.prototype.checkChainValidity = function () {
+    Blockchain.prototype.chainIsValid = function () {
         for (var i = 1; i < this.blocks.length; i++) {
             var currentBlock = this.blocks[i];
             var previousBlock = this.blocks[i - 1];
             if (previousBlock.blockHash !== currentBlock.previousHash) {
                 return false;
             }
-            // if (!currentBlock.hasValidTransactions()) {
-            //     return false;
-            // }
-            // if (currentBlock.hash !== currentBlock.calculateHash()) {
-            //     return false;
-            // }
         }
         return true;
     };

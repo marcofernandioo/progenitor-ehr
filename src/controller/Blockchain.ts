@@ -12,6 +12,7 @@ export default class Blockchain implements I.IBlockchain {
         this.pendingTransactions = [];
         this.blocks = [];
         this.difficulty;
+        this.createGenesisBlock();
     }
 
     createGenesisBlock() {
@@ -21,24 +22,14 @@ export default class Blockchain implements I.IBlockchain {
 
     // Check the remaining blocks on the chain to see if there hashes and
     // signatures are correct
-    checkChainValidity() {
+    chainIsValid() {
         for (let i = 1; i < this.blocks.length; i++) {
             const currentBlock = this.blocks[i];
             const previousBlock = this.blocks[i - 1];
-
             if (previousBlock.blockHash !== currentBlock.previousHash) {
                 return false;
             }
-
-            // if (!currentBlock.hasValidTransactions()) {
-            //     return false;
-            // }
-
-            // if (currentBlock.hash !== currentBlock.calculateHash()) {
-            //     return false;
-            // }
         }
-
         return true;
     }
 

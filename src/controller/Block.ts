@@ -37,9 +37,9 @@ export default class Block implements I.IBlock {
     }
 
     calculateMerkleRoot() {
-        // if (this.transactions.length === 0)
-        //     return "";
-        
+        if (this.transactions.length === 0) {
+            return '';
+        }
         let txHashList = this.transactions.map((tx) => tx.hash);
         while (txHashList.length > 1) {
             const newHashes = [];
@@ -84,6 +84,8 @@ export default class Block implements I.IBlock {
 
     calculateMerkleRoot2(): String {
         let transactionList: String[] = this.transactions.map(o => o.hash);
+        if (transactionList.length === 0)
+            return '';
 
         while (transactionList.length > 1) {
             let newTransactionList: string[] = [];

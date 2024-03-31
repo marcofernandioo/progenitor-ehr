@@ -21,8 +21,9 @@ var Block = /** @class */ (function () {
         }
     };
     Block.prototype.calculateMerkleRoot = function () {
-        // if (this.transactions.length === 0)
-        //     return "";
+        if (this.transactions.length === 0) {
+            return '';
+        }
         var txHashList = this.transactions.map(function (tx) { return tx.hash; });
         while (txHashList.length > 1) {
             var newHashes = [];
@@ -60,6 +61,8 @@ var Block = /** @class */ (function () {
     };
     Block.prototype.calculateMerkleRoot2 = function () {
         var transactionList = this.transactions.map(function (o) { return o.hash; });
+        if (transactionList.length === 0)
+            return '';
         while (transactionList.length > 1) {
             var newTransactionList = [];
             for (var i = 0; i < transactionList.length; i += 2) {
