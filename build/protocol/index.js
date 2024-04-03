@@ -36,32 +36,87 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var get_port_1 = require("get-port");
-// import getPort from '../node_modules/get-port';
-// import getPort from '../../node_modules/get-port';
-// const getPort = require('get-port');
+var portfinder = require("portfinder");
+var axios_1 = require("axios");
 var Protocol = /** @class */ (function () {
     function Protocol() {
     }
-    Protocol.startServerOnAvailablePort = function (app) {
+    // Start the node server on an available port from 300 to port 3004
+    Protocol.startServerOnAvailablePort = function (app, cb) {
+        var _this = this;
+        portfinder.getPortPromise({ port: 8000, stopPort: 8004 })
+            .then(function (port) {
+            _this.nodePort = port;
+            app.listen(port, cb(port));
+        })
+            .catch(function (err) {
+            console.log("Error,", err);
+        });
+    };
+    // Send a request to all the nodes in the blockchain except itself.
+    Protocol.propagateRequest = function (method, endpoint, data) {
         return __awaiter(this, void 0, void 0, function () {
-            var port;
+            var options, availablePorts, currentPort, isPortAvailable, error_1, _i, availablePorts_1, availablePort, url, config, response, error_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, (0, get_port_1.default)({ port: this.portList })];
+                    case 0:
+                        options = { port: 3000, stopPort: 3004 };
+                        availablePorts = [];
+                        currentPort = options.port;
+                        _a.label = 1;
                     case 1:
-                        port = _a.sent();
-                        app.listen(port, function () {
-                            console.log("App running on port", port);
-                        });
-                        return [2 /*return*/];
+                        if (!(currentPort <= options.stopPort)) return [3 /*break*/, 6];
+                        _a.label = 2;
+                    case 2:
+                        _a.trys.push([2, 4, , 5]);
+                        return [4 /*yield*/, portfinder.getPortPromise({ port: currentPort })];
+                    case 3:
+                        isPortAvailable = _a.sent();
+                        if (isPortAvailable) {
+                            availablePorts.push(currentPort);
+                        }
+                        return [3 /*break*/, 5];
+                    case 4:
+                        error_1 = _a.sent();
+                        console.error("Error checking port ".concat(currentPort, ": ").concat(error_1));
+                        return [3 /*break*/, 5];
+                    case 5:
+                        currentPort++;
+                        return [3 /*break*/, 1];
+                    case 6:
+                        _i = 0, availablePorts_1 = availablePorts;
+                        _a.label = 7;
+                    case 7:
+                        if (!(_i < availablePorts_1.length)) return [3 /*break*/, 12];
+                        availablePort = availablePorts_1[_i];
+                        if (!(availablePort !== this.nodePort)) return [3 /*break*/, 11];
+                        _a.label = 8;
+                    case 8:
+                        _a.trys.push([8, 10, , 11]);
+                        url = "http://localhost:".concat(availablePort).concat(endpoint);
+                        config = {
+                            method: method,
+                            url: url,
+                            data: data
+                        };
+                        return [4 /*yield*/, (0, axios_1.default)(config)];
+                    case 9:
+                        response = _a.sent();
+                        console.log("Response from ".concat(url, ": ").concat(JSON.stringify(response.data)));
+                        return [3 /*break*/, 11];
+                    case 10:
+                        error_2 = _a.sent();
+                        console.error("Error sending request to ".concat(availablePort, " ").concat(endpoint, ": ").concat(error_2));
+                        return [3 /*break*/, 11];
+                    case 11:
+                        _i++;
+                        return [3 /*break*/, 7];
+                    case 12: return [2 /*return*/];
                 }
             });
         });
     };
-    Protocol.prototype.propagateBlockchainData = function () {
-    };
-    Protocol.portList = [3000, 3001, 3002, 3003, 3004];
+    Protocol.nodePort = 0;
     return Protocol;
 }());
 exports.default = Protocol;

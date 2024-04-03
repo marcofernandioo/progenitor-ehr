@@ -10,6 +10,15 @@ var Blockchain = /** @class */ (function () {
         this.difficulty;
         this.createGenesisBlock();
     }
+    // public static getInstance(): Blockchain {
+    //     if (!Blockchain.instance) {
+    //         Blockchain.instance = new Blockchain();
+    //     }
+    //     return Blockchain.instance;
+    // }
+    // public static overrideInstance(newInstance: Blockchain): void {
+    //     Blockchain.instance = newInstance;
+    // }
     Blockchain.prototype.createGenesisBlock = function () {
         var genesisBlock = new Block_1.default('', [], 0);
         this.blocks.push(genesisBlock);
@@ -46,6 +55,7 @@ var Blockchain = /** @class */ (function () {
     };
     Blockchain.prototype.addTransaction = function (tx) {
         var _a;
+        // TODO: Maybe we can first validate if the transaction is valid?
         (_a = this.pendingTransactions) === null || _a === void 0 ? void 0 : _a.push(tx);
     };
     Blockchain.prototype.mineBlock = function () {

@@ -9,14 +9,16 @@ export default class Transaction implements I.ITransaction {
     hash: String;
     signature: String;
 
+
     constructor(_sender: String, _body: any, privateKey: any) {
         this.sender = _sender;
         this.timestamp = Date.now();
         this.body = _body;
         // this.signature = this.sign2(privateKey);
-        this.signature = this.signTx(privateKey);
+        // this.signature = this.signTx(privateKey);
+        this.signature = '';
         this.hash = this.calculateTxHash();
-    }
+    };
 
     // We sign the transaction hash using private key.
     sign(key: any) {

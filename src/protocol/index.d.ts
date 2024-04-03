@@ -1,12 +1,11 @@
-// protocol.d.ts
-
-// Likely using ES modules based on "import" statement
-import getPort from 'get-port';
-
-export default class Protocol {
-  static readonly portList: number[]; // Use readonly to indicate fixed values
-
-  static startServerOnAvailablePort(app: any): Promise<void>; // Use Promise for async function
-
-  static propagateBlockchainData(): void; // No return type for void functions
+declare module 'get-port' {
+    export default function getPort(options?: { port?: number | number[] }): Promise<number>;
 }
+
+declare class Protocol {
+    static portList: number[];
+    static startServerOnAvailablePort(app: any): Promise<void>;
+    static propagateBlockchainData(): void;
+}
+
+export default Protocol;

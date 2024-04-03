@@ -2,7 +2,8 @@ import * as I from '../interface'
 
 import Block from './Block';
 
-export default class Blockchain implements I.IBlockchain {
+class Blockchain implements I.IBlockchain {
+
     blocks: I.IBlock[];
     difficulty: number = 1;
     miningReward: Number = 100;
@@ -14,6 +15,17 @@ export default class Blockchain implements I.IBlockchain {
         this.difficulty;
         this.createGenesisBlock();
     }
+
+    // public static getInstance(): Blockchain {
+    //     if (!Blockchain.instance) {
+    //         Blockchain.instance = new Blockchain();
+    //     }
+    //     return Blockchain.instance;
+    // }
+
+    // public static overrideInstance(newInstance: Blockchain): void {
+    //     Blockchain.instance = newInstance;
+    // }
 
     createGenesisBlock() {
         const genesisBlock = new Block('', [], 0);
@@ -59,6 +71,7 @@ export default class Blockchain implements I.IBlockchain {
     }
 
     addTransaction(tx: I.ITransaction) {
+        // TODO: Maybe we can first validate if the transaction is valid?
         this.pendingTransactions?.push(tx);
     }
 
@@ -83,3 +96,5 @@ export default class Blockchain implements I.IBlockchain {
     }
 
 }
+
+export default Blockchain;

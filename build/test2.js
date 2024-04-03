@@ -198,6 +198,8 @@ function derivePublicKey(privateKey) {
     }
 }
 var publicKey = derivePublicKey(privKey);
+console.log("PUBLIC KEY:", publicKey);
+console.log("PRIVATE KEY:", privKey);
 var tx1 = new Transaction_1.default(publicKey, "any-body", privKey);
 var tx2 = new Transaction_1.default(publicKey, "any-body-1", privKey);
 var progenitor = new Blockchain_1.default();
@@ -210,4 +212,3 @@ var tx3 = new Transaction_1.default(publicKey, "any-body-1", privKey);
 progenitor.addTransaction(tx3);
 progenitor.mineBlock();
 console.log(progenitor);
-// console.log(tx1);

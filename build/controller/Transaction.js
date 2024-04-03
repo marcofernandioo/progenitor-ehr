@@ -8,9 +8,11 @@ var Transaction = /** @class */ (function () {
         this.timestamp = Date.now();
         this.body = _body;
         // this.signature = this.sign2(privateKey);
-        this.signature = this.signTx(privateKey);
+        // this.signature = this.signTx(privateKey);
+        this.signature = '';
         this.hash = this.calculateTxHash();
     }
+    ;
     // We sign the transaction hash using private key.
     Transaction.prototype.sign = function (key) {
         if (key.getPublic('hex') !== this.sender)
