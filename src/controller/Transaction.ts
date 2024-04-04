@@ -14,7 +14,6 @@ export default class Transaction implements I.ITransaction {
         this.timestamp = Date.now();
         this.medicalRecord = _medicalRecord;
         this.hash = this.calculateTxHash();
-        console.log(_medicalRecord);
     };
 
     // Sign a transaction using the private key.
@@ -57,7 +56,7 @@ export default class Transaction implements I.ITransaction {
         }
     }
 
-    // PROD: Move this to util files. Transaction hash, not yet signed by sender.
+    // Calculate the hash of a transaction.
     calculateTxHash(): String {
         return crypto.createHash('sha256').update(this.sender + this.medicalRecord.toString() + this.timestamp).digest('hex');
     }

@@ -6,9 +6,9 @@ export default class Block implements I.IBlock {
     previousHash: String;
     timestamp: Number;
     transactions: I.ITransaction[];
-    nonce: number; // Actual value is assigned upon block is mined.
-    merkleRoot: String; // Assigned upon transaction limit is reached.
-    blockHash: String;  //  Assigned upon transaction limit is reached.
+    nonce: number;
+    merkleRoot: String; 
+    blockHash: String;
     index: number;
 
     constructor (_previousHash: String, _transactions: I.ITransaction[], _index: number) {
@@ -36,50 +36,26 @@ export default class Block implements I.IBlock {
         }
     }
 
-    calculateMerkleRoot() {
-        if (this.transactions.length === 0) {
-            return '';
-        }
-        let txHashList = this.transactions.map((tx) => tx.hash);
-        while (txHashList.length > 1) {
-            const newHashes = [];
-            for (let i = 0; i < txHashList.length - 1; i += 2) {
-                const combinedHash = crypto.createHash('256').update(txHashList[i].concat(txHashList[i+1].toString()));
-                newHashes.push(combinedHash);
-            }
-            if (txHashList.length % 2 !== 0) {
-                newHashes.push(txHashList[txHashList.length-1]);
-            }
-        }
-        return txHashList[0];
-    }
-
-    calculateHash(transactions: string): string {
-        // const dataBuffer = Buffer.from(transactions.hash, 'utf-8');
-        return crypto.createHash('sha256').update(transactions).digest('hex');
-    }
-
-    // calculateMerkleRoot1(transactions: string): string {
-    //     if (transactions.length === 1)  
-    //         return transactions[0];
-
-    //     const newTransactions: any[] = [];
-
-    //     for (let i = 0; i < transactions.length; i += 2) {
-    //         if (i + 1 < transactions.length) {
-    //             const hash = this.calculateHash(transactions[i].hash +''+ transactions[i+1].hash);
-    //             newTransactions.push(hash);
-    //         } else {
-    //             const hash = this.calculateHash(transactions[i].hash + ''+transactions[i].hash);
-    //             newTransactions.push(hash);
+    // calculateMerkleRoot() {
+    //     if (this.transactions.length === 0) {
+    //         return '';
+    //     }
+    //     let txHashList = this.transactions.map((tx) => tx.hash);
+    //     while (txHashList.length > 1) {
+    //         const newHashes = [];
+    //         for (let i = 0; i < txHashList.length - 1; i += 2) {
+    //             const combinedHash = crypto.createHash('256').update(txHashList[i].concat(txHashList[i+1].toString()));
+    //             newHashes.push(combinedHash);
+    //         }
+    //         if (txHashList.length % 2 !== 0) {
+    //             newHashes.push(txHashList[txHashList.length-1]);
     //         }
     //     }
-    //     console.log(newTransactions);
-    //     return this.calculateMerkleRoot1(newTransactions);
+    //     return txHashList[0];
     // }
 
-    getTransactionAsString() {
-        
+    calculateHash(transactions: string): string {
+        return crypto.createHash('sha256').update(transactions).digest('hex');
     }
 
     calculateMerkleRoot2(): String {

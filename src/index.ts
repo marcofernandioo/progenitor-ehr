@@ -1,8 +1,7 @@
-const express = require('express');
 import mongoose from 'mongoose';
+const express = require('express');
 const cors = require('cors');
 import * as path from 'path';
-import * as forge from 'node-forge';
 
 import { util } from './util'
 import Protocol from './protocol/index'
@@ -25,40 +24,33 @@ app.use(express.static('public'));
 
 // Test endpoint
 app.get('/', (req: any, res: any) => {
-    res.json({ data: "yo this fire." })
+    res.json({ data: "api works." })
 })
 
-// [DONE] Registration
+// Registration
 app.post('/register', async (req: any, res: any) => {
+    
     // 1. Input Username & role.
     const { username, role } = req.body;
+    
     // 2. Generate ppkp.
     const { publicKey, privateKey } = util.generateRSAKeyPair();
+
     // 3. Store in DB.
     try {
         const _user = await createUser({ username, role, publicKey });
         return res.json({ data: { publicKey, privateKey } })
-    } catch(e) {
-        return res.json({ e});
+    } catch (e) {
+        return res.json({ e });
     }
 })
 
-// [DONE] Login
+// Login
 app.post('/login', async (req: any, res: any) => {
     try {
         const { username } = req.body;
         let privateKey = req.body.privateKey;
-        console.log("BTOA: ")
-        console.log(privateKey);
         privateKey = atob(privateKey);
-        console.log("ATOB: ")
-        console.log(privateKey);
-        // console.log(privateKey);
-        // console.log(username);
-
-        // const { username } = req.body;
-        // const privateKey = `
-        // `
 
         const _privateKey = `
 -----BEGIN PRIVATE KEY-----
@@ -94,20 +86,19 @@ gA3uztMlpfe8X0fLuXYKTzQ=
         // 1. Find username in DB.
         const user: IUser | any = await getUserByUsername(username);
         if (!user) return null;
+
         // // 2. Check if private key entered could generate the public key stored in the DB.
-        // const _publicKey = util.derivePublicKeyFromPrivateKey(privateKey.replace(" ", "\n"));
-        const _publicKey = util.derivePublicKeyFromPrivateKeys2(_privateKey);
+        const _publicKey = util.derivePublicKeyFromPrivateKey(privateKey);
         console.log(_publicKey);
         if (user.publicKey === _publicKey) {
-            return res.json({ data: "logged in"});
+            return res.json({ data: "logged in" });
         }
     } catch (e) {
         console.log(e);
-        return res.json({ error: "Error! ",e });
+        return res.json({ error: "Error! ", e });
     }
 })
 
-// 1. Add Transaction
 // Create a new Transaction
 app.post('/create/transaction', (req: any, res: any) => {
     const { publicKey, hospital, doctor, treatment, diagnosis, privateKey } = req.body;
@@ -162,14 +153,14 @@ InWC/+yNuRMoBFTejM7FSbsFJZc=
 
     // 2. Add the tx obj into the blockchain
     console.log(Blockchain);
-    return res.json({ data: "TX added to the blockchain"});
+    return res.json({ data: "TX added to the blockchain" });
 
 })
 
 // 2. Get the Whole Blockchain Record
 app.get('/get/blockchain', (req: any, res: any) => {
     const progenitor = Blockchain.getInstance();
-    return res.json({data: progenitor});
+    return res.json({ data: progenitor });
 })
 
 app.get('/get/medical-record', (req: any, res: any) => {
@@ -183,14 +174,9 @@ app.get('/get/medical-record', (req: any, res: any) => {
             timestamp: transaction.timestamp
         }))
         .filter(Boolean);
-    return res.json({medicalRecordList})
+    return res.json({ medicalRecordList })
 })
 
-// Pass the blockchain state to the network
-app.get('/get-data', (req: any, res: any) => {
-    // 1. Actually have the blockchain data as an object.
-    // 2. Propagate.
-})
 
 // Mine the transactions in the blockchain.
 app.get('/mine', (req: any, res: any) => {
@@ -200,7 +186,7 @@ app.get('/mine', (req: any, res: any) => {
     progenitor.mineBlock();
     // 2. Propagate new blockchain state.
     console.log(progenitor);
-    return res.json({ data: progenitor, msg: "Block is mined."})
+    return res.json({ data: progenitor, msg: "Block is mined." })
 })
 
 // Endpoint to receive any data from the network

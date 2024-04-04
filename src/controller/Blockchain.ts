@@ -72,7 +72,6 @@ class Blockchain implements I.IBlockchain {
     }
 
     addTransaction(tx: I.ITransaction) {
-        // TODO: Maybe we can first validate if the transaction is valid?
         this.pendingTransactions?.push(tx);
     }
 

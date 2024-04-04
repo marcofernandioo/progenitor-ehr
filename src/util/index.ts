@@ -1,5 +1,4 @@
 import * as crypto from 'crypto';
-import * as forge from 'node-forge';
 
 import { IKeyPair } from '../interface';
 
@@ -13,24 +12,6 @@ export class util {
             throw new Error('Failed to derive public key: ' + error.message);
         }
     }
-
-    
-    static derivePublicKeyFromPrivateKeys2(privateKeyPem: string) {
-    try {
-        // Convert the PEM-encoded private key to a forge PrivateKey object
-        const privateKey = forge.pki.privateKeyFromPem(privateKeyPem);
-    
-        // Generate the public key from the private key
-        const publicKey = forge.pki.setRsaPublicKey(privateKey.n, privateKey.e);
-    
-        // Convert the public key to PEM format
-        const publicKeyPem = forge.pki.publicKeyToPem(publicKey);
-    
-        return publicKeyPem;
-      } catch (err) {
-        throw err;
-      }
-}
 
     static generateRSAKeyPair(): IKeyPair {
         try {
