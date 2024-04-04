@@ -37,8 +37,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var crypto = require("crypto");
+var forge = require("node-forge");
 var Transaction = /** @class */ (function () {
-    function Transaction(_sender, _medicalRecord, privateKey) {
+    function Transaction(_sender, _medicalRecord) {
         this.hash = "";
         this.signature = "";
         this.sender = _sender;
@@ -62,18 +63,28 @@ var Transaction = /** @class */ (function () {
             });
         });
     };
+    Transaction.prototype.signWithForge = function (privateKeyPEM) {
+        try {
+            // Parse private key
+            var privateKey = forge.pki.privateKeyFromPem(privateKeyPEM);
+            // Calculate hash
+            var md = forge.md.sha256.create();
+            md.update(this.medicalRecord.toString(), 'utf8');
+            var hash = md.digest().getBytes();
+            // Sign the hash
+            var signature = privateKey.sign(hash);
+            // Convert the signature to hexadecimal string
+            console.log(signature);
+            return forge.util.bytesToHex(signature);
+        }
+        catch (error) {
+            console.error('Error signing with Forge:', error.message);
+            throw error;
+        }
+    };
     // PROD: Move this to util files. Transaction hash, not yet signed by sender.
     Transaction.prototype.calculateTxHash = function () {
         return crypto.createHash('sha256').update(this.sender + this.medicalRecord.toString() + this.timestamp).digest('hex');
-    };
-    Transaction.prototype.derivePublicKey = function (privateKey) {
-        try {
-            var publicKey = crypto.createPublicKey(privateKey);
-            return publicKey.export({ type: 'spki', format: 'pem' }).toString();
-        }
-        catch (error) {
-            throw new Error('Failed to derive public key: ' + error.message);
-        }
     };
     // We sign the transaction hash using private key.
     Transaction.prototype.sign = function (key) {

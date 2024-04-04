@@ -6,7 +6,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "diu": "tsc src/index.ts --outDir build && node build/index.js",
+    "start": "tsc src/index.ts --outDir build && node build/index.js",
     "keygen": "tsc src/controller/KeyGenerator.ts --outDir build && node build/KeyGenerator.js",
     "test": "tsc src/test2.ts --outDir build && node build/test2.js"
   },

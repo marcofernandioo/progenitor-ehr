@@ -1,4 +1,5 @@
 import * as crypto from 'crypto';
+import * as forge from 'node-forge';
 import * as I from '../interface'
 
 export default class Transaction implements I.ITransaction {
@@ -8,7 +9,7 @@ export default class Transaction implements I.ITransaction {
     hash: String="";
     signature: String="";
 
-    constructor(_sender: String, _medicalRecord: I.IMedicalRecord, privateKey: any) {
+    constructor(_sender: String, _medicalRecord: I.IMedicalRecord) {
         this.sender = _sender;
         this.timestamp = Date.now();
         this.medicalRecord = _medicalRecord;
@@ -34,18 +35,31 @@ export default class Transaction implements I.ITransaction {
         this.signature =  signature.toString('hex');
     }
 
+    signWithForge(privateKeyPEM: string): string {
+        try {
+            // Parse private key
+            const privateKey = forge.pki.privateKeyFromPem(privateKeyPEM);
+    
+            // Calculate hash
+            const md = forge.md.sha256.create();
+            md.update(this.medicalRecord.toString(), 'utf8');
+            const hash = md.digest().getBytes();
+    
+            // Sign the hash
+            const signature = privateKey.sign(hash);
+    
+            // Convert the signature to hexadecimal string
+            console.log(signature);
+            return forge.util.bytesToHex(signature);
+        } catch (error: any) {
+            console.error('Error signing with Forge:', error.message);
+            throw error;
+        }
+    }
+
     // PROD: Move this to util files. Transaction hash, not yet signed by sender.
     calculateTxHash(): String {
         return crypto.createHash('sha256').update(this.sender + this.medicalRecord.toString() + this.timestamp).digest('hex');
-    }
-
-    derivePublicKey(privateKey: string): string {
-        try {
-            const publicKey = crypto.createPublicKey(privateKey);
-            return publicKey.export({ type: 'spki', format: 'pem' }).toString();
-        } catch (error: any) {
-            throw new Error('Failed to derive public key: ' + error.message);
-        }
     }
 
     // We sign the transaction hash using private key.

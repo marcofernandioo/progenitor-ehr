@@ -2,12 +2,11 @@ const express = require('express');
 import mongoose from 'mongoose';
 const cors = require('cors');
 import * as path from 'path';
+import * as forge from 'node-forge';
 
-// import { derivePrivateKeyFromPublicKey } from './util';
 import { util } from './util'
 import Protocol from './protocol/index'
 
-// import Progenitor from './controller/BlockchainInstance';
 import Blockchain from './controller/Blockchain'
 import Transaction from './controller/Transaction';
 import MedicalRecord from './controller/MedicalRecord';
@@ -93,15 +92,15 @@ gA3uztMlpfe8X0fLuXYKTzQ=
         console.log(_privateKey === privateKey);
 
         // 1. Find username in DB.
-        // const user: IUser | any = await getUserByUsername(username);
-        // if (!user) return null;
+        const user: IUser | any = await getUserByUsername(username);
+        if (!user) return null;
         // // 2. Check if private key entered could generate the public key stored in the DB.
-        // // const _publicKey = util.derivePublicKeyFromPrivateKey(privateKey.replace(" ", "\n"));
-        // const _publicKey = util.derivePublicKeyFromPrivateKey(_privateKey);
-        // console.log(_publicKey);
-        // if (user.publicKey === _publicKey) {
-        //     return res.json({ data: "logged in"});
-        // }
+        // const _publicKey = util.derivePublicKeyFromPrivateKey(privateKey.replace(" ", "\n"));
+        const _publicKey = util.derivePublicKeyFromPrivateKeys2(_privateKey);
+        console.log(_publicKey);
+        if (user.publicKey === _publicKey) {
+            return res.json({ data: "logged in"});
+        }
     } catch (e) {
         console.log(e);
         return res.json({ error: "Error! ",e });
@@ -112,6 +111,7 @@ gA3uztMlpfe8X0fLuXYKTzQ=
 // Create a new Transaction
 app.post('/create/transaction', (req: any, res: any) => {
     const { publicKey, hospital, doctor, treatment, diagnosis, privateKey } = req.body;
+
     const _publicKey = `-----BEGIN PUBLIC KEY-----
 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1ZfZINmIeZJIw4AVWsCJ
 MDwh57xGCAXbYLdBLuZlbkN0XI2F4Thx4vzGgv9IERkg9xkFNSF/Vlwawx2KeobI
@@ -150,20 +150,18 @@ G9oS63Hyevoh4kRTcQb0NBpstFvNGhLT0dxKYVPvFfUCgYEA1ymFiS9p1O6TFS+8
 InWC/+yNuRMoBFTejM7FSbsFJZc=
 -----END PRIVATE KEY-----`;
 
-    console.log(privateKey);
-    console.log(_privateKey);
-
-
     // 1. Create a new tx object
-    // const medicalRecord = new MedicalRecord(hospital, doctor, treatment, diagnosis);
-    // console.log(medicalRecord);
-    // const newTransaction = new Transaction(publicKey, medicalRecord, privateKey);
-    // newTransaction.signTx(privateKey);
-    // const progenitor = Blockchain.getInstance();
-    // progenitor.addTransaction(newTransaction);
+    const medicalRecord = new MedicalRecord(hospital, doctor, treatment, diagnosis);
+    console.log("Medical record: ")
+    console.log(medicalRecord);
+    const newTransaction = new Transaction(_publicKey, medicalRecord);
+    newTransaction.signTx(_privateKey);
+
+    const progenitor = Blockchain.getInstance();
+    progenitor.addTransaction(newTransaction);
 
     // 2. Add the tx obj into the blockchain
-    // console.log(Blockchain);
+    console.log(Blockchain);
     return res.json({ data: "TX added to the blockchain"});
 
 })
