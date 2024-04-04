@@ -4,28 +4,29 @@ import Block from './Block';
 
 class Blockchain implements I.IBlockchain {
 
+    private static instance: Blockchain;
     blocks: I.IBlock[];
     difficulty: number = 1;
     miningReward: Number = 100;
     pendingTransactions: I.ITransaction[];
 
-    constructor() {
+    private constructor() {
         this.pendingTransactions = [];
         this.blocks = [];
         this.difficulty;
         this.createGenesisBlock();
     }
 
-    // public static getInstance(): Blockchain {
-    //     if (!Blockchain.instance) {
-    //         Blockchain.instance = new Blockchain();
-    //     }
-    //     return Blockchain.instance;
-    // }
+    public static getInstance(): Blockchain {
+        if (!Blockchain.instance) {
+            Blockchain.instance = new Blockchain();
+        }
+        return Blockchain.instance;
+    }
 
-    // public static overrideInstance(newInstance: Blockchain): void {
-    //     Blockchain.instance = newInstance;
-    // }
+    public static overrideInstance(newInstance: Blockchain): void {
+        Blockchain.instance = newInstance;
+    }
 
     createGenesisBlock() {
         const genesisBlock = new Block('', [], 0);
@@ -76,6 +77,9 @@ class Blockchain implements I.IBlockchain {
     }
 
     mineBlock() {
+        if (this.pendingTransactions.length === 0) {
+            return;
+        }
         const block = new Block(
             this.getLatestBlock().blockHash,
             this.pendingTransactions.slice(0,5),

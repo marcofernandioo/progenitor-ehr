@@ -10,15 +10,15 @@ var Blockchain = /** @class */ (function () {
         this.difficulty;
         this.createGenesisBlock();
     }
-    // public static getInstance(): Blockchain {
-    //     if (!Blockchain.instance) {
-    //         Blockchain.instance = new Blockchain();
-    //     }
-    //     return Blockchain.instance;
-    // }
-    // public static overrideInstance(newInstance: Blockchain): void {
-    //     Blockchain.instance = newInstance;
-    // }
+    Blockchain.getInstance = function () {
+        if (!Blockchain.instance) {
+            Blockchain.instance = new Blockchain();
+        }
+        return Blockchain.instance;
+    };
+    Blockchain.overrideInstance = function (newInstance) {
+        Blockchain.instance = newInstance;
+    };
     Blockchain.prototype.createGenesisBlock = function () {
         var genesisBlock = new Block_1.default('', [], 0);
         this.blocks.push(genesisBlock);
@@ -59,6 +59,9 @@ var Blockchain = /** @class */ (function () {
         (_a = this.pendingTransactions) === null || _a === void 0 ? void 0 : _a.push(tx);
     };
     Blockchain.prototype.mineBlock = function () {
+        if (this.pendingTransactions.length === 0) {
+            return;
+        }
         var block = new Block_1.default(this.getLatestBlock().blockHash, this.pendingTransactions.slice(0, 5), this.getLatestBlock().index + 1);
         while (block.blockHash.substring(0, this.difficulty) !== Array(this.difficulty + 1).join('0')) {
             block.nonce++;

@@ -1,7 +1,9 @@
+import { IMedicalRecord } from "./MedicalRecord";
+
 export interface ITransaction {
     sender: String,
     timestamp: Number,
-    body: any,
+    medicalRecord: IMedicalRecord,
     hash: String,
     signature: String
 }

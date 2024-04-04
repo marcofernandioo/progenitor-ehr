@@ -3,3 +3,4 @@ export type {IBlock} from './Block';
 export type {IBlockchain} from './Blockchain';
 export type {IUser} from './User'
 export type {IKeyPair} from './KeyPair'
+export type {IMedicalRecord} from './MedicalRecord'

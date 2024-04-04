@@ -1,45 +1,10 @@
-"use strict";
 // // // import * as controller from './controller/Blockchain';
 // // import * as crypto from 'crypto';
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-Object.defineProperty(exports, "__esModule", { value: true });
+
 // // import Blockchain from './controller/Blockchain'
 // // import Transaction from './controller/Transaction';
+
+
 // // async function derivePublicKey(privateKey: any) {
 // //     try {
 // //         const publicKey = crypto.createPublicKey(privateKey);
@@ -48,6 +13,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // //         throw new Error('Failed to derive public key: ' + error.message);
 // //     }
 // // }
+
 // // async function derivePublicKey2(privateKey: string, passphrase: string) {
 // //     try {
 // //         const decryptedPrivateKey = crypto.privateDecrypt(
@@ -63,6 +29,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // //         throw new Error('Failed to derive public key: ' + error.message);
 // //     }
 // // }
+
 // // const privateKey1 = `-----BEGIN RSA PRIVATE KEY-----
 // // MIIC3TBXBgkqhkiG9w0BBQ0wSjApBgkqhkiG9w0BBQwwHAQItAR7x5FMox4CAggA
 // // MAwGCCqGSIb3DQIJBQAwHQYJYIZIAWUDBAEqBBA7hwfuOnniS4dGbNCQpiezBIIC
@@ -81,15 +48,24 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // // lA20aX332HoXRFhIsMDUvmrQh8KNMaCDdgcm9kmIBySj8PncsKmNxaMNyczY0FkS
 // // 7a8HYcNf2+2o4Ki4rw7ibTc=
 // // -----END RSA PRIVATE KEY-----`
+
 // // const pubKey1 = derivePublicKey2(privateKey1, "pass");
 // // // console.log(privateKey1.replace(/\n/g, ''));
 // // // const pubKey1 = derivePublicKey(publicKey1);
+
 // // console.log(pubKey1);
+
+
 // // const progenitor = new Blockchain();
 // // const tx1 = new Transaction('senderA', "BODY_OF_TRANSACTION_1", "private_key");
 // // const tx2 = new Transaction('senderB', "BODY_OF_TRANSACTION_2", "private_key");
+
+
+
+
 // // progenitor.addTransaction(tx1);
 // // progenitor.addTransaction(tx2);
+
 // // console.log(progenitor);
 // //------------------------------------------------------------------------------------------
 // // import crypto module
@@ -112,6 +88,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // // }, (err: any, publicKey: any, privateKey: any) => {
 // //     publicKey
 // // });
+
+
 // // //Assign key to variable
 // // const publicKeyString = `-----BEGIN RSA PUBLIC KEY-----
 // // MIICCgKCAgEAzXlBBes4SpVk5BxPVuY+LR5+pxcjTNVzlVl4ugix3husiWPSfnYl
@@ -130,9 +108,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // // const publickKeyObject = crypto.createPublicKey(publicKeyString);
 // // publickKeyObject.export({ format: 'pem', type: 'pkcs1' });
 // // console.log(publickKeyObject)
+
 // //------------------------------------------------------------------------------------------
 // // THIS SHIT WORKS
 // // const forge = require('node-forge');
+
 // // var privateKey = `-----BEGIN RSA PRIVATE KEY-----
 // // MIICXAIBAAKBgQCOEDvAy4g+MCLUDGk2ybxmXPR3ETXwlfAZo5lS5bDWDZe/uvMF
 // // 83VtN+Sf/AcRJ3A3F46vgKSaoe/38hXM4w/ADbUY5wWXAyeMf6y4kujOy/IxX2Ls
@@ -148,23 +128,31 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // // oWDSt2MUOGIF2sCOwJUCQFSsxf5dzUjHRy4G3xaM0uqg70PUfPwYm7/jSoO734tZ
 // // D8TrVoeYNZDvjZyVa7/jghMeKHAwRKyT8L2dmukEyJY=
 // // -----END RSA PRIVATE KEY-----`;
+
 // // // convert PEM-formatted private key to a Forge private key
 // // var forgePrivateKey = forge.pki.privateKeyFromPem(privateKey);
+
 // // // get a Forge public key from the Forge private key
 // // var forgePublicKey = forge.pki.setRsaPublicKey(forgePrivateKey.n, forgePrivateKey.e);
+
 // // // convert the Forge public key to a PEM-formatted public key
 // // var publicKey = forge.pki.publicKeyToPem(forgePublicKey);
+
 // // // convert the Forge public key to an OpenSSH-formatted public key for authorized_keys
 // // var sshPublicKey = forge.ssh.publicKeyToOpenSSH(forgePublicKey);
+
 // // console.log(`PEM-formatted public key:${publicKey}`);
 // // //------------------------------------------------------------------------------------------
 // // THIS ALSO WORKS, WITHOUT USING SHADY ASS NPM MODULES.
 // // // WE GONNA USE THISSSSSSS
+
 // // import * as crypto from 'crypto';
+
 // // interface KeyPair {
 // //   publicKey: string;
 // //   privateKey: string;
 // // }
+
 // // function generateRSAKeyPair(): KeyPair {
 // //   try {
 // //     const { publicKey, privateKey } = crypto.generateKeyPairSync('rsa', {
@@ -177,6 +165,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // //     throw new Error('Failed to generate RSA key pair: ' + error.message);
 // //   }
 // // }
+
 // // function derivePublicKey(privateKey: string): string {
 // //   try {
 // //     const publicKey = crypto.createPublicKey(privateKey);
@@ -185,10 +174,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // //     throw new Error('Failed to derive public key: ' + error.message);
 // //   }
 // // }
+
 // // Example usage:
 // // const { publicKey, privateKey } = generateRSAKeyPair();
 // // console.log('Public Key:', publicKey);
 // // console.log('Private Key:', privateKey);
+
 // // const privKey = `-----BEGIN PRIVATE KEY-----
 // // MIIEwAIBADANBgkqhkiG9w0BAQEFAASCBKowggSmAgEAAoIBAQDVl9kg2Yh5kkjD
 // // gBVawIkwPCHnvEYIBdtgt0Eu5mVuQ3RcjYXhOHHi/MaC/0gRGSD3GQU1IX9WXBrD
@@ -217,43 +208,70 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // // 8CmZju4dalDJ68Mah7hitqlY4HFTAeg+MdPeoQwejjWe0XpSzzuQYvekmDWhuNgP
 // // InWC/+yNuRMoBFTejM7FSbsFJZc=
 // // -----END PRIVATE KEY-----`
+
 // // const derivedPublicKey = derivePublicKey(privKey);
 // // console.log('Derived Public Key from PrivKey:', derivedPublicKey);
+
 // //-----------------------------------------------------------------------
-var Transaction_1 = require("./controller/Transaction");
-var Blockchain_1 = require("./controller/Blockchain");
-var crypto = require("crypto");
-var privKey = "-----BEGIN PRIVATE KEY-----\nMIIEwAIBADANBgkqhkiG9w0BAQEFAASCBKowggSmAgEAAoIBAQDVl9kg2Yh5kkjD\ngBVawIkwPCHnvEYIBdtgt0Eu5mVuQ3RcjYXhOHHi/MaC/0gRGSD3GQU1IX9WXBrD\nHYp6hsiRAL+Otf5xVGAvdHAWxneWYvl+2GSrBBLDy34hJC6t8tKPkyXVqCCEmneV\nl10Zck4qQmR+J/rFCsrfHc9JLMQ9GHVx3Od1ZRb7BtGtgWgAPqKmujSgdSQ1rTqP\nVyQq/T9G65MndXgWrhn+AypxEXs/SWJFY/BkSIf07rQk+tijN/+XnxS89O4b6xZ6\nKageqRpZGMBF1OpTfd99sFyOE5qpJOfCDouWg4Brc9lfn1/EidSbo68uPL3vl4/l\nzMLHhPxXAgMBAAECggEBAKlzm42lJtGUDWgUQFzMLMp4mkl3o3OP+fgjynHD1SqC\nF1mp6VHBbxCui2q3zlvKPM3sKqZ5GcXQsmajFA6ayZnIJzC4D9GnJ9veG2LmN0+2\n28sXL95BEAYHddwjEWltIEFJcxWrGYk55q9l8zVR6tM58vHnE9qo8kPKKX4bJuB0\nCLSn9k89HjgbOae6zWOuH3yxwaLeZmv++PQ4F5GdeDz+/xR44xlJxeG0e7XqeLW1\nyysMBA6WKzW4/63tYxQtQkS2RpdvW+Bf6lxx/iMCLZBrhGzVR4WeoijUcbLSEF9T\nHCe+SThV6lh8VaXTAjNUotRrugQoZ7BR7932Qj3lAokCgYEA8+j129HxTuyroZbp\n7moGFDkxg5beMeIHQnICclx9dZULy2douLSSW67nM3qz7F2o6UTK+xPP/b8/2hSv\nGbxGEnwrUwVsam1T+wqi75J5ML6bj3wSYOr22YJdHxURukawPO8bMwBn9K5fKkPX\nYvQyx+Sy80tA+nbCHEpFmXIXbhsCgYEA4C4wbdYo5iOXEQ3cEmhPODHDcyhh7SPd\nzLsF8f+2Ne+fIZYhFbIORrB4Ly3+M7AYsjtTs08DJ2zcwj91xlRLcUkBAei9yaeR\n7b8aHDQ/Y9KQqivd67xjRzHDk9u/ygOeAS/omkVaSSSeZ8C+MbFwf+uEq6ONw1cl\nvLc5MChBnnUCgYEAgiBDKqdy6fxyBJ+S5lNCMv/gXqfamxpPbS+OBp05gcWmqTne\nMMyFWMyTJG/OFchSGUFOWW1UhbfGxP5L/Jrpd2svYfd+w7jYGRKvosiuR0cpjv9O\nfs5cK+bU74Q6FPspgxi9lhQdYfi1ZMMU4gIOJX7pycrYO8en/5fQUfEAdwkCgYEA\nw5xqE50YKOALNA1U5xbvcQgzFCu7bvGp2reiU2weMOf6gZL/IXAxdssKw5gtRCq3\nEeYkfcRG60LZSgGXocvx3FKoN2M/H1NBSSNEBDIu0cptAp+uT8EdG4U3s6++pOYN\nG9oS63Hyevoh4kRTcQb0NBpstFvNGhLT0dxKYVPvFfUCgYEA1ymFiS9p1O6TFS+8\n/3YrdKUtSUAAPOKQl2bimVrD2IOQGFylso+a0LLJnpX+E/WXQ+M9FnimT3Lkg0M2\n8CmZju4dalDJ68Mah7hitqlY4HFTAeg+MdPeoQwejjWe0XpSzzuQYvekmDWhuNgP\nInWC/+yNuRMoBFTejM7FSbsFJZc=\n-----END PRIVATE KEY-----";
-function derivePublicKey(privateKey) {
-    try {
-        var publicKey_1 = crypto.createPublicKey(privateKey);
-        return publicKey_1.export({ type: 'spki', format: 'pem' }).toString();
-    }
-    catch (error) {
-        throw new Error('Failed to derive public key: ' + error.message);
-    }
-}
-var publicKey = derivePublicKey(privKey);
-console.log("PUBLIC KEY:", publicKey);
-console.log("PRIVATE KEY:", privKey);
-var progenitor = Blockchain_1.default.getInstance();
-var tx2 = new Transaction_1.default(publicKey, "any-body-1", privKey);
-function createandinit() {
-    return __awaiter(this, void 0, void 0, function () {
-        var tx1;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    tx1 = new Transaction_1.default(publicKey, "any-body", privKey);
-                    return [4 /*yield*/, tx1.signTx(privKey)];
-                case 1:
-                    _a.sent();
-                    console.log(tx1);
-                    return [2 /*return*/];
-            }
-        });
-    });
-}
-createandinit();
+// import Transaction from "./controller/Transaction";
+// import Blockchain from "./controller/Blockchain";
+// import * as crypto from 'crypto';
+
+
+// const privKey = `-----BEGIN PRIVATE KEY-----
+// MIIEwAIBADANBgkqhkiG9w0BAQEFAASCBKowggSmAgEAAoIBAQDVl9kg2Yh5kkjD
+// gBVawIkwPCHnvEYIBdtgt0Eu5mVuQ3RcjYXhOHHi/MaC/0gRGSD3GQU1IX9WXBrD
+// HYp6hsiRAL+Otf5xVGAvdHAWxneWYvl+2GSrBBLDy34hJC6t8tKPkyXVqCCEmneV
+// l10Zck4qQmR+J/rFCsrfHc9JLMQ9GHVx3Od1ZRb7BtGtgWgAPqKmujSgdSQ1rTqP
+// VyQq/T9G65MndXgWrhn+AypxEXs/SWJFY/BkSIf07rQk+tijN/+XnxS89O4b6xZ6
+// KageqRpZGMBF1OpTfd99sFyOE5qpJOfCDouWg4Brc9lfn1/EidSbo68uPL3vl4/l
+// zMLHhPxXAgMBAAECggEBAKlzm42lJtGUDWgUQFzMLMp4mkl3o3OP+fgjynHD1SqC
+// F1mp6VHBbxCui2q3zlvKPM3sKqZ5GcXQsmajFA6ayZnIJzC4D9GnJ9veG2LmN0+2
+// 28sXL95BEAYHddwjEWltIEFJcxWrGYk55q9l8zVR6tM58vHnE9qo8kPKKX4bJuB0
+// CLSn9k89HjgbOae6zWOuH3yxwaLeZmv++PQ4F5GdeDz+/xR44xlJxeG0e7XqeLW1
+// yysMBA6WKzW4/63tYxQtQkS2RpdvW+Bf6lxx/iMCLZBrhGzVR4WeoijUcbLSEF9T
+// HCe+SThV6lh8VaXTAjNUotRrugQoZ7BR7932Qj3lAokCgYEA8+j129HxTuyroZbp
+// 7moGFDkxg5beMeIHQnICclx9dZULy2douLSSW67nM3qz7F2o6UTK+xPP/b8/2hSv
+// GbxGEnwrUwVsam1T+wqi75J5ML6bj3wSYOr22YJdHxURukawPO8bMwBn9K5fKkPX
+// YvQyx+Sy80tA+nbCHEpFmXIXbhsCgYEA4C4wbdYo5iOXEQ3cEmhPODHDcyhh7SPd
+// zLsF8f+2Ne+fIZYhFbIORrB4Ly3+M7AYsjtTs08DJ2zcwj91xlRLcUkBAei9yaeR
+// 7b8aHDQ/Y9KQqivd67xjRzHDk9u/ygOeAS/omkVaSSSeZ8C+MbFwf+uEq6ONw1cl
+// vLc5MChBnnUCgYEAgiBDKqdy6fxyBJ+S5lNCMv/gXqfamxpPbS+OBp05gcWmqTne
+// MMyFWMyTJG/OFchSGUFOWW1UhbfGxP5L/Jrpd2svYfd+w7jYGRKvosiuR0cpjv9O
+// fs5cK+bU74Q6FPspgxi9lhQdYfi1ZMMU4gIOJX7pycrYO8en/5fQUfEAdwkCgYEA
+// w5xqE50YKOALNA1U5xbvcQgzFCu7bvGp2reiU2weMOf6gZL/IXAxdssKw5gtRCq3
+// EeYkfcRG60LZSgGXocvx3FKoN2M/H1NBSSNEBDIu0cptAp+uT8EdG4U3s6++pOYN
+// G9oS63Hyevoh4kRTcQb0NBpstFvNGhLT0dxKYVPvFfUCgYEA1ymFiS9p1O6TFS+8
+// /3YrdKUtSUAAPOKQl2bimVrD2IOQGFylso+a0LLJnpX+E/WXQ+M9FnimT3Lkg0M2
+// 8CmZju4dalDJ68Mah7hitqlY4HFTAeg+MdPeoQwejjWe0XpSzzuQYvekmDWhuNgP
+// InWC/+yNuRMoBFTejM7FSbsFJZc=
+// -----END PRIVATE KEY-----`
+
+// function derivePublicKey(privateKey: string): string {
+//   try {
+//     const publicKey = crypto.createPublicKey(privateKey);
+//     return publicKey.export({ type: 'spki', format: 'pem' }).toString();
+//   } catch (error: any) {
+//     throw new Error('Failed to derive public key: ' + error.message);
+//   }
+// }
+
+// const publicKey = derivePublicKey(privKey);
+// console.log("PUBLIC KEY:", publicKey);
+// console.log("PRIVATE KEY:", privKey);
+
+// const progenitor = Blockchain.getInstance();
+// const tx2 = new Transaction(publicKey, "any-body-1", privKey);
+
+
+// async function createandinit() {
+//     const tx1 = new Transaction(publicKey, "any-body", privKey)
+//     await tx1.signTx(privKey);
+//     console.log(tx1);
+// }
+
+// createandinit();
+
 // progenitor.addTransaction(tx1);
+
 // console.log(tx1);
