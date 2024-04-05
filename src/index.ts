@@ -10,9 +10,11 @@ import Blockchain from './controller/Blockchain'
 import Transaction from './controller/Transaction';
 import MedicalRecord from './controller/MedicalRecord';
 
-import { User, getUserByUsername, createUser } from './model/user';
+import { getUserByUsername, createUser } from './model/user';
 import { IUser } from './interface';
 
+// String to connect to the MongoDB Atlas cloud database.
+// Shouldn't be hard coded into the server in a production code.
 const dbString = `mongodb+srv://marco:marco@comingback.2ovq7pl.mongodb.net/progenitor-ehr?retryWrites=true&w=majority&appName=ComingBack`
 
 const app = express();
@@ -27,12 +29,12 @@ app.get('/', (req: any, res: any) => {
     res.json({ data: "api works." })
 })
 
-// Registration
+// i. Registration
 app.post('/register', async (req: any, res: any) => {
-    
+
     // 1. Input Username & role.
     const { username, role } = req.body;
-    
+
     // 2. Generate ppkp.
     const { publicKey, privateKey } = util.generateRSAKeyPair();
 
@@ -45,7 +47,7 @@ app.post('/register', async (req: any, res: any) => {
     }
 })
 
-// Login
+// ii. Login
 app.post('/login', async (req: any, res: any) => {
     try {
         const { username } = req.body;
@@ -99,10 +101,11 @@ gA3uztMlpfe8X0fLuXYKTzQ=
     }
 })
 
-// Create a new Transaction
+// 1. Create a new Transaction
 app.post('/create/transaction', (req: any, res: any) => {
-    const { publicKey, hospital, doctor, treatment, diagnosis, privateKey } = req.body;
+    let { publicKey, hospital, doctor, treatment, diagnosis, privateKey } = req.body;
 
+    // Hard-coded public and private key pair
     const _publicKey = `-----BEGIN PUBLIC KEY-----
 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1ZfZINmIeZJIw4AVWsCJ
 MDwh57xGCAXbYLdBLuZlbkN0XI2F4Thx4vzGgv9IERkg9xkFNSF/Vlwawx2KeobI
@@ -112,7 +115,7 @@ RuuTJ3V4Fq4Z/gMqcRF7P0liRWPwZEiH9O60JPrYozf/l58UvPTuG+sWeimoHqka
 WRjARdTqU33ffbBcjhOaqSTnwg6LloOAa3PZX59fxInUm6OvLjy975eP5czCx4T8
 VwIDAQAB
 -----END PUBLIC KEY-----`;
-    const _privateKey = `-----BEGIN PRIVATE KEY-----
+    const _privateKey: string = `-----BEGIN PRIVATE KEY-----
 MIIEwAIBADANBgkqhkiG9w0BAQEFAASCBKowggSmAgEAAoIBAQDVl9kg2Yh5kkjD
 gBVawIkwPCHnvEYIBdtgt0Eu5mVuQ3RcjYXhOHHi/MaC/0gRGSD3GQU1IX9WXBrD
 HYp6hsiRAL+Otf5xVGAvdHAWxneWYvl+2GSrBBLDy34hJC6t8tKPkyXVqCCEmneV
@@ -163,6 +166,7 @@ app.get('/get/blockchain', (req: any, res: any) => {
     return res.json({ data: progenitor });
 })
 
+// 3. Get all of the medical records.
 app.get('/get/medical-record', (req: any, res: any) => {
     const progenitor = Blockchain.getInstance();
     const medicalRecordList = progenitor.blocks
@@ -177,8 +181,7 @@ app.get('/get/medical-record', (req: any, res: any) => {
     return res.json({ medicalRecordList })
 })
 
-
-// Mine the transactions in the blockchain.
+// 4. Mine the transactions in the blockchain.
 app.get('/mine', (req: any, res: any) => {
     // 0. Get the current state of the bc.
     const progenitor = Blockchain.getInstance();
@@ -191,13 +194,15 @@ app.get('/mine', (req: any, res: any) => {
 
 // Endpoint to receive any data from the network
 app.post('/receive', (req: any, res: any) => {
-    // Note: Before overriding the current bc with the new, make sure the whole bc is valid.
     // 1. Node receives the newest blockchain state.
     const data = req.body;
     console.log('Data received: ', data.data)
     // 2. Node returns the newest bc state to the response/ pass it to its client.
+    res.json({data: data.data});
 })
 
+// When a node received a valid blockchain instance from another node, 
+// override its own blockchain instance.
 app.post('/override', (req: any, res: any) => {
     // const newBc = new Blockchain();
     // const newBc = new Blockchain();
@@ -205,7 +210,6 @@ app.post('/override', (req: any, res: any) => {
 
 const callback = (port: any) => {
     console.log("Node is running on port", port);
-    // Protocol.propagateRequest('POST', '/receive', { data: 'dllm' });
     mongoose.connect(dbString)
         .then(() => console.log("DB Connected"))
         .catch(err => console.log("ERROR:", err));

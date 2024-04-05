@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.util = void 0;
 var crypto = require("crypto");
-var forge = require("node-forge");
 var util = /** @class */ (function () {
     function util() {
     }
@@ -13,20 +12,6 @@ var util = /** @class */ (function () {
         }
         catch (error) {
             throw new Error('Failed to derive public key: ' + error.message);
-        }
-    };
-    util.derivePublicKeyFromPrivateKeys2 = function (privateKeyPem) {
-        try {
-            // Convert the PEM-encoded private key to a forge PrivateKey object
-            var privateKey = forge.pki.privateKeyFromPem(privateKeyPem);
-            // Generate the public key from the private key
-            var publicKey = forge.pki.setRsaPublicKey(privateKey.n, privateKey.e);
-            // Convert the public key to PEM format
-            var publicKeyPem = forge.pki.publicKeyToPem(publicKey);
-            return publicKeyPem;
-        }
-        catch (err) {
-            throw err;
         }
     };
     util.generateRSAKeyPair = function () {

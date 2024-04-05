@@ -46,7 +46,6 @@ var Transaction = /** @class */ (function () {
         this.timestamp = Date.now();
         this.medicalRecord = _medicalRecord;
         this.hash = this.calculateTxHash();
-        console.log(_medicalRecord);
     }
     ;
     // Sign a transaction using the private key.
@@ -63,6 +62,7 @@ var Transaction = /** @class */ (function () {
             });
         });
     };
+    // Deprecated.
     Transaction.prototype.signWithForge = function (privateKeyPEM) {
         try {
             // Parse private key
@@ -82,11 +82,11 @@ var Transaction = /** @class */ (function () {
             throw error;
         }
     };
-    // PROD: Move this to util files. Transaction hash, not yet signed by sender.
+    // Calculate the hash of a transaction.
     Transaction.prototype.calculateTxHash = function () {
         return crypto.createHash('sha256').update(this.sender + this.medicalRecord.toString() + this.timestamp).digest('hex');
     };
-    // We sign the transaction hash using private key.
+    // Deprecated.
     Transaction.prototype.sign = function (key) {
         if (key.getPublic('hex') !== this.sender)
             throw new Error("Sender does not match with given keys.");

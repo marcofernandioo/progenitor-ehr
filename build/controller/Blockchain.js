@@ -23,8 +23,6 @@ var Blockchain = /** @class */ (function () {
         var genesisBlock = new Block_1.default('', [], 0);
         this.blocks.push(genesisBlock);
     };
-    // Check the remaining blocks on the chain to see if there hashes and
-    // signatures are correct
     Blockchain.prototype.chainIsValid = function () {
         for (var i = 1; i < this.blocks.length; i++) {
             var currentBlock = this.blocks[i];
@@ -35,8 +33,7 @@ var Blockchain = /** @class */ (function () {
         }
         return true;
     };
-    // Gather the first few records, combine into a block, and mine them.
-    // The 1st version of this.mineBlock();
+    // Deprecated.
     Blockchain.prototype.createBlock = function () {
         if (this.pendingTransactions.length < 5)
             return;
@@ -55,7 +52,6 @@ var Blockchain = /** @class */ (function () {
     };
     Blockchain.prototype.addTransaction = function (tx) {
         var _a;
-        // TODO: Maybe we can first validate if the transaction is valid?
         (_a = this.pendingTransactions) === null || _a === void 0 ? void 0 : _a.push(tx);
     };
     Blockchain.prototype.mineBlock = function () {

@@ -36,24 +36,6 @@ export default class Block implements I.IBlock {
         }
     }
 
-    // calculateMerkleRoot() {
-    //     if (this.transactions.length === 0) {
-    //         return '';
-    //     }
-    //     let txHashList = this.transactions.map((tx) => tx.hash);
-    //     while (txHashList.length > 1) {
-    //         const newHashes = [];
-    //         for (let i = 0; i < txHashList.length - 1; i += 2) {
-    //             const combinedHash = crypto.createHash('256').update(txHashList[i].concat(txHashList[i+1].toString()));
-    //             newHashes.push(combinedHash);
-    //         }
-    //         if (txHashList.length % 2 !== 0) {
-    //             newHashes.push(txHashList[txHashList.length-1]);
-    //         }
-    //     }
-    //     return txHashList[0];
-    // }
-
     calculateHash(transactions: string): string {
         return crypto.createHash('sha256').update(transactions).digest('hex');
     }

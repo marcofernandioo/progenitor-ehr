@@ -33,8 +33,6 @@ class Blockchain implements I.IBlockchain {
         this.blocks.push(genesisBlock);
     }
 
-    // Check the remaining blocks on the chain to see if there hashes and
-    // signatures are correct
     chainIsValid() {
         for (let i = 1; i < this.blocks.length; i++) {
             const currentBlock = this.blocks[i];
@@ -46,8 +44,7 @@ class Blockchain implements I.IBlockchain {
         return true;
     }
 
-    // Gather the first few records, combine into a block, and mine them.
-    // The 1st version of this.mineBlock();
+    // Deprecated.
     createBlock() {
         if (this.pendingTransactions.length < 5)
             return
